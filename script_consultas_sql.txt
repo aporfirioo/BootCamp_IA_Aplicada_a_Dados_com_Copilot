@@ -1,0 +1,89 @@
+Explicações das Consultas
+Consulta 1: Seleciona todas as colunas da tabela pokemon_cards.
+
+Consulta 2: Conta o número total de cartas de Pokémon.
+
+Consulta 3: Lista os movimentos associados a cada carta de Pokémon, juntando as tabelas pokemon_cards e moves.
+
+Consulta 4: Conta o número total de movimentos por carta de Pokémon.
+
+Consulta 5: Lista as fraquezas associadas a cada carta de Pokémon.
+
+Consulta 6: Lista as resistências associadas a cada carta de Pokémon.
+
+Consulta 7: Lista os custos de recuo associados a cada carta de Pokémon.
+
+Consulta 8: Conta o número total de fraquezas por carta de Pokémon.
+
+Consulta 9: Conta o número total de resistências por carta de Pokémon.
+
+Consulta 10: Lista as cartas de Pokémon com HP maior que 50.
+
+Consulta 11: Lista os movimentos que requerem mais energia, baseando-se na suposição de que o comprimento do custo de energia indica maior consumo.
+
+Se precisar de mais alguma consulta específica ou quiser ajustar algo, estarei aqui para ajudar! 😊
+
+-- Consulta 1: Seleciona todas as informações de todas as cartas de Pokémon
+-- Esta consulta retorna todas as colunas da tabela pokemon_cards
+SELECT * FROM pokemon_cards;
+
+-- Consulta 2: Contar o número total de cartas de Pokémon
+-- Esta consulta retorna a contagem total de registros na tabela pokemon_cards
+SELECT COUNT(*) AS total_pokemon_cards FROM pokemon_cards;
+
+-- Consulta 3: Listar todos os movimentos de cada carta de Pokémon
+-- Esta consulta retorna os movimentos associados a cada carta de Pokémon
+SELECT pc.name AS pokemon_name, m.move_name, m.move_description, m.energy_cost
+FROM moves m
+JOIN pokemon_cards pc ON m.card_id = pc.card_id;
+
+-- Consulta 4: Contar o número total de movimentos por cada carta de Pokémon
+-- Esta consulta retorna a contagem de movimentos associados a cada Pokémon
+SELECT pc.name AS pokemon_name, COUNT(m.move_id) AS total_moves
+FROM moves m
+JOIN pokemon_cards pc ON m.card_id = pc.card_id
+GROUP BY pc.name;
+
+-- Consulta 5: Listar todas as fraquezas de cada carta de Pokémon
+-- Esta consulta retorna as fraquezas associadas a cada carta de Pokémon
+SELECT pc.name AS pokemon_name, w.type AS weakness_type, w.multiplier
+FROM weaknesses w
+JOIN pokemon_cards pc ON w.card_id = pc.card_id;
+
+-- Consulta 6: Listar todas as resistências de cada carta de Pokémon
+-- Esta consulta retorna as resistências associadas a cada carta de Pokémon
+SELECT pc.name AS pokemon_name, r.type AS resistance_type, r.reduction
+FROM resistances r
+JOIN pokemon_cards pc ON r.card_id = pc.card_id;
+
+-- Consulta 7: Listar todos os custos de recuo de cada carta de Pokémon
+-- Esta consulta retorna os custos de recuo associados a cada carta de Pokémon
+SELECT pc.name AS pokemon_name, rc.cost AS retreat_cost
+FROM retreat_costs rc
+JOIN pokemon_cards pc ON rc.card_id = pc.card_id;
+
+-- Consulta 8: Contar o número total de fraquezas de cada carta de Pokémon
+-- Esta consulta retorna a contagem de fraquezas associadas a cada Pokémon
+SELECT pc.name AS pokemon_name, COUNT(w.weakness_id) AS total_weaknesses
+FROM weaknesses w
+JOIN pokemon_cards pc ON w.card_id = pc.card_id
+GROUP BY pc.name;
+
+-- Consulta 9: Contar o número total de resistências de cada carta de Pokémon
+-- Esta consulta retorna a contagem de resistências associadas a cada Pokémon
+SELECT pc.name AS pokemon_name, COUNT(r.resistance_id) AS total_resistances
+FROM resistances r
+JOIN pokemon_cards pc ON r.card_id = pc.card_id
+GROUP BY pc.name;
+
+-- Consulta 10: Listar as cartas de Pokémon com o maior HP
+-- Esta consulta retorna as cartas de Pokémon com HP maior que um valor especificado
+SELECT name, hp
+FROM pokemon_cards
+WHERE hp > 50;
+
+-- Consulta 11: Listar os movimentos que requerem mais energia
+-- Esta consulta retorna os movimentos que requerem um custo de energia maior que um valor especificado
+SELECT move_name, energy_cost
+FROM moves
+WHERE LENGTH(energy_cost) > 3;  -- Supondo que custo de energia mais longo indica maior consumo

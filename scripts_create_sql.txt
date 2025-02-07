@@ -1,0 +1,97 @@
+Criação de banco de dados se baseia em uma imgem de pokemom, usado o pikachu como referência. 
+
+Aqui estão os detalhes do cartão:
+
+Nome: Pikachu
+
+HP: 60
+
+Tipo: Elétrico (⚡)
+
+Número: NO. 0025 Pokémon Rato
+
+Altura: 1'4" (40.6 cm)
+
+Peso: 13.2 lbs (6 kg)
+
+Movimentos do Pikachu:
+
+Charge: "Procure em seu baralho um card de energia ⚡ básica e ligue-o a este Pokémon. Em seguida, embaralhe seu baralho."
+
+Pika Punch: "⚡⚡⚡ 50"
+
+Detalhes adicionais:
+
+Fraqueza: Lutador (x2)
+
+Resistência: Nenhuma
+
+Custo de Recuo: ⚡
+
+Ilustrador: Naoyo Kimura
+
+Número do Card: 002/015
+
+Descrição: "Quando está irritado, ele descarrega imediatamente a energia armazenada nas bolsas em suas bochechas."
+
+Vamos criar um banco de dados em SQL para armazenar as informações do cartão de Pokémon. Aqui está um exemplo de como você pode estruturar as tabelas e colunas.
+
+Estrutura do Banco de Dados
+Tabela pokemon_cards
+Esta tabela armazenará as informações básicas de cada carta de Pokémon.
+
+-- Criando a base de dados com codificação UTF-8
+CREATE DATABASE pokemon_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Usando a base de dados criada
+USE pokemon_db;
+
+-- Tabela que armazena as informações básicas de cada carta de Pokémon
+CREATE TABLE pokemon_cards (
+    card_id INT PRIMARY KEY AUTO_INCREMENT, -- Identificador único da carta
+    name VARCHAR(50), -- Nome do Pokémon
+    hp INT, -- Pontos de vida (HP) do Pokémon
+    type VARCHAR(20), -- Tipo do Pokémon (e.g., Elétrico)
+    number VARCHAR(10), -- Número do Pokémon
+    height DECIMAL(5, 2), -- Altura do Pokémon (em pés)
+    weight DECIMAL(5, 2), -- Peso do Pokémon (em libras)
+    description TEXT, -- Descrição do Pokémon
+    illustrator VARCHAR(50) -- Ilustrador da carta
+);
+
+-- Tabela que armazena as informações sobre os movimentos do Pokémon
+CREATE TABLE moves (
+    move_id INT PRIMARY KEY AUTO_INCREMENT, -- Identificador único do movimento
+    card_id INT, -- Identificador da carta correspondente
+    move_name VARCHAR(50), -- Nome do movimento
+    move_description TEXT, -- Descrição do movimento
+    energy_cost VARCHAR(10), -- Custo de energia do movimento
+    FOREIGN KEY (card_id) REFERENCES pokemon_cards(card_id) -- Chave estrangeira referenciando a tabela pokemon_cards
+);
+
+-- Tabela que armazena as informações sobre as fraquezas do Pokémon
+CREATE TABLE weaknesses (
+    weakness_id INT PRIMARY KEY AUTO_INCREMENT, -- Identificador único da fraqueza
+    card_id INT, -- Identificador da carta correspondente
+    type VARCHAR(20), -- Tipo da fraqueza (e.g., Lutador)
+    multiplier DECIMAL(3, 1), -- Multiplicador de dano da fraqueza
+    FOREIGN KEY (card_id) REFERENCES pokemon_cards(card_id) -- Chave estrangeira referenciando a tabela pokemon_cards
+);
+
+-- Tabela que armazena as informações sobre as resistências do Pokémon
+CREATE TABLE resistances (
+    resistance_id INT PRIMARY KEY AUTO_INCREMENT, -- Identificador único da resistência
+    card_id INT, -- Identificador da carta correspondente
+    type VARCHAR(20), -- Tipo da resistência
+    reduction DECIMAL(3, 1), -- Redução de dano da resistência
+    FOREIGN KEY (card_id) REFERENCES pokemon_cards(card_id) -- Chave estrangeira referenciando a tabela pokemon_cards
+);
+
+-- Tabela que armazena as informações sobre os custos de recuo do Pokémon
+CREATE TABLE IF NOT EXISTS retreat_costs (
+    retreat_id INT PRIMARY KEY AUTO_INCREMENT,
+    card_id INT,
+    cost VARCHAR(10),
+    FOREIGN KEY (card_id) REFERENCES pokemon_cards(card_id)
+
+

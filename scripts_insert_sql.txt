@@ -1,0 +1,43 @@
+-- Inserindo dados na tabela pokemon_cards
+INSERT INTO pokemon_cards (name, hp, type, number, height, weight, description, illustrator)
+VALUES 
+    ('Pikachu', 60, 'Elétrico', '0025', 1.40, 13.2, 'Quando está irritado, ele descarrega imediatamente a energia armazenada nas bolsas em suas bochechas.', 'Naoyo Kimura'),
+    ('Charmander', 50, 'Fogo', '0004', 2.00, 18.7, 'Tem preferência por coisas quentes. Quando chove, diz-se que o vapor jorra da ponta de sua cauda.', 'Ken Sugimori'),
+    ('Bulbasaur', 45, 'Grama/Veneno', '0001', 2.04, 15.2, 'Há uma semente de planta nas suas costas desde o dia em que nasce. A semente cresce lentamente.', 'Mitsuhiro Arita'),
+    ('Squirtle', 44, 'Água', '0007', 1.08, 19.8, 'Quando retrai seu longo pescoço em sua concha, esguicha água com força vigorosa.', 'Atsuko Nishida');
+
+-- Inserindo dados na tabela moves
+INSERT INTO moves (card_id, move_name, move_description, energy_cost)
+VALUES 
+    (1, 'Charge', 'Procure em seu baralho um card de energia ⚡ básica e ligue-o a este Pokémon. Em seguida, embaralhe seu baralho.', '⚡'),
+    (1, 'Pika Punch', '⚡⚡⚡ 50', '⚡⚡⚡'),
+    (2, 'Ember', 'Descarte uma carta de Energia 🔥 ligada a este Pokémon.', '🔥'),
+    (2, 'Flamethrower', 'Descarte uma Energia ligada a este Pokémon.', '🔥🔥🔥'),
+    (3, 'Vine Whip', 'Chicote de vinha de dano básico.', '🌿'),
+    (3, 'Razor Leaf', 'Folha navalha de dano moderado.', '🌿🌿'),
+    (4, 'Water Gun', 'Um ataque básico de água.', '💧'),
+    (4, 'Bubble', 'Pode deixar o Pokémon oponente Paralisado.', '💧💧');
+
+-- Inserindo dados na tabela weaknesses
+INSERT INTO weaknesses (card_id, type, multiplier)
+VALUES 
+    (1, 'Lutador', 2.0),
+    (2, 'Água', 2.0),
+    (3, 'Fogo', 2.0),
+    (4, 'Elétrico', 2.0);
+
+-- Inserindo dados na tabela resistances
+INSERT INTO resistances (card_id, type, reduction)
+VALUES 
+    (1, 'Nenhuma', 0.0),
+    (2, 'Nenhuma', 0.0),
+    (3, 'Nenhuma', 0.0),
+    (4, 'Nenhuma', 0.0);
+
+-- Inserindo dados na tabela retreat_costs
+INSERT INTO retreat_costs (card_id, cost)
+VALUES 
+    (1, '⚡'),
+    (2, '🔥'),
+    (3, '🌿'),
+    (4, '💧');
